@@ -10,6 +10,8 @@ import {TestUtils} from "./Utils/TestUtils.sol";
 
 import {ERC20User} from "./accounts/ERC20User.sol";
 
+import {BalanceSum} from "./handlers/BalanceSum.sol";
+
 contract ERC20Test is Test, TestUtils {
     bytes internal constant ARITHMETIC_ERROR =
         abi.encodeWithSignature("Panic(uint256)", 0x11);
@@ -263,4 +265,71 @@ contract ERC20Test is Test, TestUtils {
 
         assertEq(_token.balanceOf(recipient_), amount_);
     }
+}
+
+contract Invariant_ERC20Testing is Test {
+
+    MockERC20 internal _token;
+
+    function setUp() public {
+        _token = new MockERC20("SPHERE", "SPH", 18);
+
+    }
+
+    function invariant_metadataIsConstant() public {
+        assertEq(_token.name(), "SPHERE");
+        assertEq(_token.symbol(), "SPH");
+        assertEq(_token.decimals(), 18);
+    }
+
+  function testInvariant_mintingAffectsTotalSupplyAndBalance(address to, uint256 amount) public {
+    vm.assume(to != address(0));
+    
+    uint256 preSupply = _token.totalSupply();
+
+    _token.mint(to, amount);
+
+    uint256 postSupply = _token.totalSupply();
+    uint256 toBalance = _token.balanceOf(to);
+
+    assertEq(
+        postSupply,
+        preSupply + amount,
+        "Total supply did not increase correctly after minting"
+    );
+
+    assertEq(
+        toBalance,
+        amount,
+        "Recipient balance incorrect after minting"
+    );
+}
+
+function testInvariant_transferCorrectlyUpdatesBalances(address sender, address receiver, uint256 mintAmount, uint256 transferAmount) public {
+    vm.assume(sender != address(0) && receiver != address(0) && sender != receiver);
+    vm.assume(mintAmount > 0 && transferAmount > 0 && mintAmount >= transferAmount);
+
+    vm.prank(sender);
+    _token.mint(sender, mintAmount);
+
+    uint256 initialSenderBalance = _token.balanceOf(sender);
+    uint256 initialReceiverBalance = _token.balanceOf(receiver);
+    uint256 initialTotalSupply = _token.totalSupply();
+
+    vm.prank(sender);
+    _token.transfer(receiver, transferAmount);
+
+    uint256 expectedSenderBalance = initialSenderBalance - transferAmount;
+    uint256 expectedReceiverBalance = initialReceiverBalance + transferAmount;
+
+    assertEq(_token.balanceOf(sender), expectedSenderBalance, "Sender balance incorrect after transfer");
+
+    assertEq(_token.balanceOf(receiver), expectedReceiverBalance, "Receiver balance incorrect after transfer");
+
+    assertEq(_token.totalSupply(), initialTotalSupply, "Total supply should remain constant after transfers");
+}
+
+
+
+
 }
