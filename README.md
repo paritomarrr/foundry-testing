@@ -1,66 +1,24 @@
-## Foundry
+# Sphere Audits
+## Description
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+Sphere Audits is dedicated to empowering Web3 enthusiasts with the knowledge and resources needed to understand smart contract security comprehensively. Our mission is to provide educational content that bridges the gap between complex security concepts and practical, actionable guidance, enabling developers and auditors alike to secure their smart contracts effectively.
 
-Foundry consists of:
+## Features
+- Educational Guides: Step-by-step tutorials and guides covering various aspects of smart contract security.
+- Security Best Practices: Insights into best practices and common pitfalls in smart contract development.
+- Hands-on Examples: Real-world examples and code snippets to illustrate security concepts.
+- Testing Frameworks: Introduction to tools like Foundry for developing, testing, and securing smart contracts.
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+# Getting Started
+## Prerequisites
 
-## Documentation
+No specific prerequisites are needed to explore the educational content. However, to experiment with the provided code examples, you may need:
 
-https://book.getfoundry.sh/
+- Node.js (Recommended version 14.x or above)
+- Foundry for smart contract compilation and testing
 
-## Usage
 
-### Build
-
-```shell
-$ forge build
-```
-
-### Test
-
-```shell
-$ forge test
-```
-
-### Format
-
-```shell
-$ forge fmt
-```
-
-### Gas Snapshots
-
-```shell
-$ forge snapshot
-```
-
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+# Contact
+- Email: tomarpari90@gmail.com
+- Twitter: [@SphereAudits](https://twitter.com/SphereAudits)
+- LinkedIn: [@sphereAudits](https://www.linkedin.com/company/sphere-audits)
