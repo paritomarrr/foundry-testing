@@ -143,6 +143,10 @@ contract ERC20 is IERC20 {
         return true;
     }
 
+     function mint(address recipient_, uint256 amount_) external {
+        _mint(recipient_, amount_);
+    }
+
     function DOMAIN_SEPARATOR()
         public
         view
@@ -207,6 +211,8 @@ contract ERC20 is IERC20 {
         emit Transfer(address(0), recipient_, amount_);
     }
 
+   
+ 
     function _transfer(
         address owner_,
         address recipient_,
